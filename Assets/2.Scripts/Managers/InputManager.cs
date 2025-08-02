@@ -3,10 +3,20 @@ using UnityEngine.InputSystem;
 
 public class InputManager : Singleton<InputManager>
 {
-    [SerializeField] CharacterController controller;
+    [SerializeField] StellaController controller;
     
-    public void OnMove(InputValue value)
+    public void OnMove(InputAction.CallbackContext context)
     {
-        controller?.OnMove(value.Get<Vector2>());
+        controller?.OnMove(context.ReadValue<Vector2>());
+    }
+    
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        controller?.OnJump(context);
+    }
+    
+    public void OnDash()
+    {
+        controller?.OnDash();
     }
 }

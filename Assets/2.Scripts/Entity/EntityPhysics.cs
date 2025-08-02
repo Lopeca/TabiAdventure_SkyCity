@@ -46,7 +46,7 @@ public class EntityPhysics : MonoBehaviour
 
     private void CalculateVelocity()
     {
-        if (isGrounded) velocity.y = 0;
+        if (isGrounded && VelocityY < 0) velocity.y = 0;
         else ApplyGravity();
     }
 
@@ -61,12 +61,7 @@ public class EntityPhysics : MonoBehaviour
 
         isGrounded = hit && Vector2.Angle(hit.normal, Vector2.up) <= maxGroundAngle;
     }
-
-    private void MovePosition2()
-    {
-        rb.MovePosition(rb.position + new Vector2(1 * Time.fixedDeltaTime, 0)); // 벽 뚫고 움직이는 는 거 확인
-    }
-
+    
     private void MovePosition()
     {
         if (velocity == Vector2.zero) return;
@@ -120,6 +115,6 @@ public class EntityPhysics : MonoBehaviour
 
     private void ApplyGravity()
     {
-        velocity.y += Physics2D.gravity.y * Time.fixedDeltaTime;
+        if(gravityEnabled) velocity.y += Physics2D.gravity.y * Time.fixedDeltaTime;
     }
 }
