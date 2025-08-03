@@ -116,5 +116,6 @@ public class EntityPhysics : MonoBehaviour
     private void ApplyGravity()
     {
         if(gravityEnabled) velocity.y += Physics2D.gravity.y * Time.fixedDeltaTime;
+        if(velocity.y > maxFallSpeed) velocity.y = maxFallSpeed;
     }
 }

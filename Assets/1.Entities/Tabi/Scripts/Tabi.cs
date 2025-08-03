@@ -25,7 +25,7 @@ public class Tabi : MonoBehaviour
     public void HandleHorizontalInput()
     {
         Physics.VelocityX = Controller.InputValue.x * TabiSO.MoveSpeed;
-        Look(Controller.InputValue.x);
+        if(Controller.InputValue.x != 0) Look(Controller.InputValue.x);
     }
 
     private void Look(float inputValueX)
