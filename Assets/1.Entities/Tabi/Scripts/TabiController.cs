@@ -10,9 +10,11 @@ public class TabiController : StellaController
     [SerializeField, ReadOnly] private Vector2 inputValue;
     public Vector2 InputValue => inputValue;
 
+	[SerializeField, ReadOnly] private bool dashBuffer;
+	public bool DashBuffer => dashBuffer;
     private bool jumpBuffer;
     public float jumpStartTime;
-    public const float JUMP_MAX_DURATION = 0.24f;
+    public const float JUMP_MAX_DURATION = 0.22f;
     public bool jumpAscending;
     public bool JumpBuffer => jumpBuffer;
     
@@ -39,8 +41,15 @@ public class TabiController : StellaController
         }
     }
 
-    public override void OnDash()
+    public override void OnDash(InputAction.CallbackContext context)
     {
-        throw new System.NotImplementedException();
+        if (context.performed)
+        {
+			dashBuffer = true;
+		}
+		else if (context.canceled)
+		{
+			dashBuffer = false;
+		}
     }
 }

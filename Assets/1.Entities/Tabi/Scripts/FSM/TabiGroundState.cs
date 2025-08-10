@@ -4,9 +4,9 @@ public abstract class TabiGroundState:FSMState
 {
     protected TabiFSM FSM => owner as TabiFSM;
     protected Tabi Tabi => FSM.Tabi;
-    private TabiController TabiCon;
-    
-    public TabiGroundState(FSMBase owner) : base(owner)
+    private readonly TabiController TabiCon;
+
+    protected TabiGroundState(FSMBase owner) : base(owner)
     {
         TabiCon = Tabi.Controller;
     }
@@ -15,7 +15,6 @@ public abstract class TabiGroundState:FSMState
     {
         base.InitTransitions();
         AddTransition(()=>!Tabi.Physics.IsGrounded, FSM.AirState);
-        
     }
 
     public override void OnEnter()

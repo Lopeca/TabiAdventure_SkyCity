@@ -1,15 +1,15 @@
 using System;
+using _2.Scripts.ExtensionMethods;
 using NaughtyAttributes;
 using UnityEngine;
 
 public class EntityPhysics : MonoBehaviour
 {
-    [Header("참조")] 
-    [SerializeField] Rigidbody2D rb;
+    [Header("참조")] [SerializeField] Rigidbody2D rb;
     [SerializeField] BoxCollider2D bodyCollider;
 
-    [Header("속성")] 
-    [SerializeField, ReadOnly] public Vector2 velocity;
+    [Header("속성")] [SerializeField, ReadOnly]
+    public Vector2 velocity;
     [SerializeField] private float maxFallSpeed = 15;
     [SerializeField] float maxGroundAngle = 60;
     [SerializeField, ReadOnly] bool isGrounded;
@@ -17,6 +17,7 @@ public class EntityPhysics : MonoBehaviour
 
     [Header("가변 속성")] [SerializeField] float groundCheckDistance = 0.015f;
     [SerializeField] LayerMask terrainMask;
+    [SerializeField] float skinWidth = 0.015f;
 
     public bool gravityEnabled = true;
 
@@ -46,53 +47,123 @@ public class EntityPhysics : MonoBehaviour
 
     private void CalculateVelocity()
     {
-        if (isGrounded && VelocityY < 0) velocity.y = 0;
+        if (isGrounded && VelocityY <= 0) velocity.y = 0;
         else ApplyGravity();
     }
 
     public void CheckGround()
     {
         RaycastHit2D hit = Physics2D.BoxCast(bodyCollider.bounds.center,
-            bodyCollider.bounds.size,
+            new Vector2(bodyCollider.bounds.size.x - skinWidth * 2, bodyCollider.bounds.size.y),
             0,
             Vector2.down,
             groundCheckDistance,
             terrainMask);
 
+
         isGrounded = hit && Vector2.Angle(hit.normal, Vector2.up) <= maxGroundAngle;
     }
-    
+
     private void MovePosition()
     {
         if (velocity == Vector2.zero) return;
 
-        float rayDistance = velocity.magnitude * Time.fixedDeltaTime;
-        var hit = Physics2D.BoxCast(bodyCollider.bounds.center, bodyCollider.bounds.size, 0, velocity.normalized,
-            rayDistance, terrainMask);
+        Vector2 move = Vector2.zero;
 
-        Vector2 move;
-        if (!hit)
+        // 수평 이동 처리
+        if (velocity.x != 0)
         {
-            move = velocity * Time.fixedDeltaTime;
-        }
-        else
-        {
-            float hitAngle = Vector2.Angle(hit.normal, Vector2.up);
+            float horizontalDistance = Mathf.Abs(velocity.x) * Time.fixedDeltaTime;
+            Vector2 horizontalDirection = velocity.x > 0 ? Vector2.right : Vector2.left;
 
-            if (hitAngle < maxGroundAngle)
+            var horizontalHit = Physics2D.BoxCast(
+                bodyCollider.bounds.center,
+                bodyCollider.bounds.size,
+                0,
+                horizontalDirection,
+                horizontalDistance,
+                terrainMask
+            );
+
+            if (!horizontalHit)
             {
-                move = velocity * Time.fixedDeltaTime;
+                move.x = velocity.x * Time.fixedDeltaTime;
             }
-
             else
-                move = velocity * hit.distance;
+            {
+                float hitAngle = Vector2.Angle(horizontalHit.normal, Vector2.up);
+
+                if (hitAngle < maxGroundAngle)
+                {
+                    Vector2 inclineVector = horizontalHit.normal.RotateVector(90 * Mathf.Sign(-velocity.x));
+                    float inclineDistance = new Vector2(velocity.x * Time.fixedDeltaTime, 0).Projection(inclineVector).magnitude;
+                    
+                    var inclineHit = Physics2D.BoxCast(
+                        bodyCollider.bounds.center,
+                        bodyCollider.bounds.size,
+                        0,
+                        inclineVector,
+                        inclineDistance,
+                        terrainMask
+                    );
+                    
+                    // 경사면 방향으로 충돌이 없으면 
+                    if (!inclineHit)
+                    {
+                        move.x = velocity.x * Time.fixedDeltaTime;
+                    }
+                    
+                }
+                else
+                {
+                    // 벽 - 안전 거리까지만 이동
+                    // move.x = horizontalDirection.x * Mathf.Max(0, horizontalHit.distance - skinWidth);
+                    // Debug.Log(move.x);
+                }
+            }
         }
 
-        if (isGrounded)
+        // 수직 이동 처리
+        if (velocity.y != 0)
+        {
+            float verticalDistance = Mathf.Abs(velocity.y) * Time.fixedDeltaTime;
+            Vector2 verticalDirection = velocity.y > 0 ? Vector2.up : Vector2.down;
+
+            var verticalHit = Physics2D.BoxCast(
+                bodyCollider.bounds.center,
+                bodyCollider.bounds.size,
+                0,
+                verticalDirection,
+                verticalDistance,
+                terrainMask
+            );
+
+            if (!verticalHit)
+            {
+                move.y = velocity.y * Time.fixedDeltaTime;
+            }
+            else
+            {
+                float hitAngle = Vector2.Angle(verticalHit.normal, Vector2.up);
+
+                if (hitAngle < maxGroundAngle)
+                {
+                    // 경사면 - 그대로 이동
+                    move.y = velocity.y * Time.fixedDeltaTime;
+                }
+                else
+                {
+                    // 천장/바닥 - 안전 거리까지만 이동
+                    move.y = verticalDirection.y * Mathf.Max(0, verticalHit.distance - skinWidth);
+                }
+            }
+        }
+
+        // Ground Snap (수직 충돌이 없을 때만)
+        if (isGrounded && velocity.y <= 0)
         {
             float groundDistance = bodyCollider.bounds.size.y / 2 - groundCheckDistance;
             float snapRayDistance = bodyCollider.bounds.size.y / 2 + 0.05f;
-
 
             RaycastHit2D snapHit = Physics2D.BoxCast(
                 (Vector2)bodyCollider.bounds.center + move,
@@ -106,7 +177,7 @@ public class EntityPhysics : MonoBehaviour
             if (snapHit)
             {
                 float adjust = groundDistance - snapHit.distance;
-                move += Vector2.up * adjust;
+                move += Vector2.up * (adjust + skinWidth);
             }
         }
 
@@ -115,7 +186,7 @@ public class EntityPhysics : MonoBehaviour
 
     private void ApplyGravity()
     {
-        if(gravityEnabled) velocity.y += Physics2D.gravity.y * Time.fixedDeltaTime;
-        if(velocity.y > maxFallSpeed) velocity.y = maxFallSpeed;
+        if (gravityEnabled) velocity.y += Physics2D.gravity.y * Time.fixedDeltaTime;
+        if (velocity.y < -maxFallSpeed) velocity.y = -maxFallSpeed;
     }
 }

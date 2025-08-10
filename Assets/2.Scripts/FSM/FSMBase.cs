@@ -27,4 +27,9 @@ public abstract class FSMBase : MonoBehaviour
         _currentState?.OnUpdate();
         _currentState?.CheckTransitions();
     }
+
+    private void FixedUpdate()
+    {
+        _currentState?.OnFixedUpdate();
+    }
 }

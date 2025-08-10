@@ -15,8 +15,8 @@ public class InputManager : Singleton<InputManager>
         controller?.OnJump(context);
     }
     
-    public void OnDash()
+    public void OnDash(InputAction.CallbackContext context)
     {
-        controller?.OnDash();
+        controller?.OnDash(context);
     }
 }

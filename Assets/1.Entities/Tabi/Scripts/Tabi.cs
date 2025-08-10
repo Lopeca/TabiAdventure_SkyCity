@@ -22,9 +22,10 @@ public class Tabi : MonoBehaviour
 
     #region FSM
 
-    public void HandleHorizontalInput()
+    public void HandleHorizontalInput(bool dash = false)
     {
-        Physics.VelocityX = Controller.InputValue.x * TabiSO.MoveSpeed;
+        float speed = dash ? TabiSO.MoveSpeed * 2 : TabiSO.MoveSpeed;
+        Physics.VelocityX = Controller.InputValue.x * speed;
         if(Controller.InputValue.x != 0) Look(Controller.InputValue.x);
     }
 

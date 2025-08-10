@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class TabiWalkState : TabiGroundState
+public class TabiRunState : TabiGroundState
 {
-    public TabiWalkState(FSMBase owner) : base(owner)
+    public TabiRunState(FSMBase owner) : base(owner)
     {
     }
 
@@ -10,24 +10,23 @@ public class TabiWalkState : TabiGroundState
     {
         base.InitTransitions();
         AddTransition(()=>Tabi.Controller.InputValue.x == 0, FSM.IdleState);
-        AddTransition(()=>Tabi.Controller.InputValue.x != 0 && Tabi.Controller.DashBuffer, FSM.RunState);
-        
+        AddTransition(()=>Tabi.Controller.InputValue.x != 0 && !Tabi.Controller.DashBuffer, FSM.WalkState);
     }
     public override void OnEnter()
     {
         base.OnEnter();
-        Tabi.Animator.SetBool(AnimationStrings.Walk, true);
+        Tabi.Animator.SetBool(AnimationStrings.Run, true);
     }
 
     public override void OnUpdate()
     {
         base.OnUpdate();
-        Tabi.HandleHorizontalInput();
+        Tabi.HandleHorizontalInput(true);
     }
     
     public override void OnExit()
     {
         base.OnExit();
-        Tabi.Animator.SetBool(AnimationStrings.Walk, false);
+        Tabi.Animator.SetBool(AnimationStrings.Run, false);
     }
 }

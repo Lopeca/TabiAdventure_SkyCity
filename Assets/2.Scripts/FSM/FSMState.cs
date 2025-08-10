@@ -19,7 +19,11 @@ public abstract class FSMState
     public abstract void OnExit();
 
     public abstract void OnUpdate();
-    
+
+    public virtual void OnFixedUpdate()
+    {
+    }
+
     public void CheckTransitions()
     {
         foreach (FSMTransition transition in transitions)

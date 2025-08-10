@@ -5,32 +5,35 @@ public class TabiAirState:FSMState
     TabiFSM FSM => owner as TabiFSM;
     Tabi Tabi => FSM.Tabi;
     private readonly TabiController TabiCon;
+    private bool dashBuffer;
     
     public TabiAirState(FSMBase owner) : base(owner)
     {
         TabiCon = Tabi.Controller;
-
     }
 
     public override void InitTransitions()
     {
         base.InitTransitions();
         AddTransition(()=>Tabi.Physics.IsGrounded && TabiCon.InputValue.x == 0 , FSM.IdleState);
-        AddTransition(()=>Tabi.Physics.IsGrounded && TabiCon.InputValue.x != 0, FSM.WalkState);
+        AddTransition(()=>Tabi.Physics.IsGrounded && TabiCon.InputValue.x != 0 && !TabiCon.DashBuffer, FSM.WalkState);
+        AddTransition(()=>Tabi.Physics.IsGrounded && TabiCon.InputValue.x != 0 && TabiCon.DashBuffer, FSM.RunState);
     }
 
     public override void OnEnter()
     {
-
+        Tabi.Animator.SetBool(AnimationStrings.Air, true);
+        dashBuffer = TabiCon.DashBuffer;
     }
 
     public override void OnExit()
     {
-
+        Tabi.Animator.SetBool(AnimationStrings.Air, false);
     }
 
     public override void OnUpdate()
     {
+        Tabi.Animator.SetFloat(AnimationStrings.VelocityY, Tabi.Physics.VelocityY);
         if (TabiCon.jumpAscending)
         {
             // 점프 시간 초과
@@ -52,7 +55,7 @@ public class TabiAirState:FSMState
                 Tabi.Physics.VelocityY = Tabi.TabiSO.JumpForce;
             }
         }
-        Tabi.HandleHorizontalInput();
+        Tabi.HandleHorizontalInput(dashBuffer);
         
     }
 }
