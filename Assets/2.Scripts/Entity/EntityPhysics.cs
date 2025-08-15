@@ -112,13 +112,17 @@ public class EntityPhysics : MonoBehaviour
                     {
                         move.x = velocity.x * Time.fixedDeltaTime;
                     }
+                    // 이동예정 거리보다 레이가 짧음. 즉 벽 감지 시(skinWidth가 moveDelta보다 짧을 것)
+                    else if (inclineHit.distance > skinWidth)
+                    {
+                        move.x = horizontalDirection.x * (inclineHit.distance - skinWidth);
+                    }
                     
                 }
-                else
+                else if (horizontalHit.distance > skinWidth )
                 {
                     // 벽 - 안전 거리까지만 이동
-                    // move.x = horizontalDirection.x * Mathf.Max(0, horizontalHit.distance - skinWidth);
-                    // Debug.Log(move.x);
+                    move.x = horizontalDirection.x * (horizontalHit.distance - skinWidth);
                 }
             }
         }
