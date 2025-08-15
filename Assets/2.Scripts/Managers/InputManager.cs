@@ -19,4 +19,9 @@ public class InputManager : Singleton<InputManager>
     {
         controller?.OnDash(context);
     }
+    
+    public void OnAttack(InputAction.CallbackContext context)
+    {
+        controller?.OnAttack(context);   
+    }
 }

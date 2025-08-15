@@ -11,14 +11,16 @@ public class TabiController : StellaController
     public Vector2 InputValue => inputValue;
 
 	[SerializeField, ReadOnly] private bool dashBuffer;
-	public bool DashBuffer => dashBuffer;
     private bool jumpBuffer;
     public float jumpStartTime;
     public const float JUMP_MAX_DURATION = 0.22f;
     public bool jumpAscending;
-    public bool JumpBuffer => jumpBuffer;
-    
 
+    private bool attackBuffer;
+    
+	public bool DashBuffer => dashBuffer;
+    public bool JumpBuffer => jumpBuffer;
+    public bool AttackBuffer => attackBuffer;
     private void Reset()
     {
         tabi = GetComponent<Tabi>();
@@ -51,5 +53,17 @@ public class TabiController : StellaController
 		{
 			dashBuffer = false;
 		}
+    }
+
+    public override void OnAttack(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            attackBuffer = true;
+        }
+        else if (context.canceled)
+        {
+            attackBuffer = false;
+        }
     }
 }
