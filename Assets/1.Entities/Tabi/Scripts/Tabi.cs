@@ -1,14 +1,17 @@
 using System;
+using NaughtyAttributes;
 using UnityEngine;
 
 public class Tabi : MonoBehaviour
 {
-    [field:SerializeField] public TabiSO TabiSO { get; private set; }
+    [Expandable,SerializeField] private TabiSO tabiSO;
+    public TabiSO TabiSO => tabiSO;
     [field:SerializeField] public TabiController Controller { get; private set; }
     [field:SerializeField] public EntityPhysics Physics { get; private set; }
     [field:SerializeField] public TabiFSM FSM { get; private set; }
     [field:SerializeField] public Animator Animator { get; private set; }
 
+    public Vector2 LookDirection => transform.eulerAngles.y == 0 ? Vector2.right : Vector2.left;
     private void Reset()
     {
         Physics = GetComponent<EntityPhysics>();
@@ -19,8 +22,6 @@ public class Tabi : MonoBehaviour
     {
         FSM.Init();
     }
-
-    #region FSM
 
     public void HandleHorizontalInput(bool dash = false)
     {
@@ -33,6 +34,5 @@ public class Tabi : MonoBehaviour
     {
         transform.eulerAngles = inputValueX > 0 ? new Vector3(0, 0, 0) : new Vector3(0, 180, 0);
     }
-
-    #endregion
+    
 }
