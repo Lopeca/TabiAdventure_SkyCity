@@ -54,7 +54,7 @@ public class EntityPhysics : MonoBehaviour
     public void CheckGround()
     {
         RaycastHit2D hit = Physics2D.BoxCast(bodyCollider.bounds.center,
-            new Vector2(bodyCollider.bounds.size.x - skinWidth * 2, bodyCollider.bounds.size.y),
+            new Vector2(bodyCollider.bounds.size.x, bodyCollider.bounds.size.y),
             0,
             Vector2.down,
             groundCheckDistance,

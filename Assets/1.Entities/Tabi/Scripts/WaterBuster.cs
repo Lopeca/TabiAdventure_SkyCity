@@ -7,6 +7,7 @@ public class WaterBuster : MonoBehaviour
     public TabiController tabiCon;
     public GameObject bubblePrefab;
     public GameObject middleBubblePrefab;
+    public GameObject fullBubblePrefab;
 
     [Header("글로우")] 
     public GameObject glowRoot;
@@ -64,7 +65,7 @@ public class WaterBuster : MonoBehaviour
     {
         if (Time.time - chargeStartTime > FULL_CHARGE_TIME)
         {
-            ShootTargetBuster(middleBubblePrefab);
+            ShootTargetBuster(fullBubblePrefab);
         }
         else if (Time.time - chargeStartTime > MID_CHARGE_TIME)
         {
