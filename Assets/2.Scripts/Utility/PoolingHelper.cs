@@ -65,6 +65,7 @@ public static class PoolingHelper
     
     public static string GetPrefabName(this GameObject go)
     {
+        if (!go.name.Contains("(")) return go.name;
         return go.name.Substring(0, go.name.IndexOf("(", StringComparison.Ordinal));
     }
 }

@@ -15,12 +15,9 @@ public class TabiController : StellaController
     public float jumpStartTime;
     public const float JUMP_MAX_DURATION = 0.22f;
     public bool jumpAscending;
-
-    private bool attackBuffer;
     
 	public bool DashBuffer => dashBuffer;
     public bool JumpBuffer => jumpBuffer;
-    public bool AttackBuffer => attackBuffer;
     private void Reset()
     {
         tabi = GetComponent<Tabi>();
@@ -53,17 +50,5 @@ public class TabiController : StellaController
 		{
 			dashBuffer = false;
 		}
-    }
-
-    public override void OnAttack(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            attackBuffer = true;
-        }
-        else if (context.canceled)
-        {
-            attackBuffer = false;
-        }
     }
 }
