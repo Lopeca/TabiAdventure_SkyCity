@@ -9,6 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6765305530442511671}
+  - component: {fileID: 6797425452971224973}
+  - component: {fileID: 2665081229323619217}
+  - component: {fileID: 7875465300752775829}
   m_Layer: 0
   m_Name: WaterBubble_MiddleShot_Pivot
   m_TagString: Untagged
@@ -25,13 +28,68 @@ Transform:
   m_GameObject: {fileID: 2237898226061424897}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9, y: 14, z: -0.10467108}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1308302218738266576}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &6797425452971224973
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2237898226061424897}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &2665081229323619217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2237898226061424897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94b0c4cb4c3010e4b8d5f1f801ab7e7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 0
+  moveDirection: {x: 0, y: 0}
+--- !u!114 &7875465300752775829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2237898226061424897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7539e0164825c9c4ab462a85c58fc67a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onEnableTime: 0
+  lifeTime: 2
 --- !u!1 &4648602120625523167
 GameObject:
   m_ObjectHideFlags: 0
@@ -42,9 +100,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1308302218738266576}
   - component: {fileID: 8598090933433609442}
-  - component: {fileID: 7711377843361680523}
   - component: {fileID: 6423406712881026981}
-  - component: {fileID: 2334436677667247385}
   m_Layer: 0
   m_Name: WaterBubble_MiddleShot
   m_TagString: Untagged
@@ -83,20 +139,6 @@ MonoBehaviour:
   terrainLayer:
     serializedVersion: 2
     m_Bits: 64
---- !u!114 &7711377843361680523
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4648602120625523167}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94b0c4cb4c3010e4b8d5f1f801ab7e7d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 0
-  moveDirection: {x: 0, y: 0}
 --- !u!61 &6423406712881026981
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -143,33 +185,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.2947273, y: 0.96133924}
   m_EdgeRadius: 0
---- !u!50 &2334436677667247385
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4648602120625523167}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!1 &5121923630975025695
 GameObject:
   m_ObjectHideFlags: 0

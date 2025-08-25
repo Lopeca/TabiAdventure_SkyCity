@@ -55,7 +55,7 @@ public class TabiAirState:FSMState
                 Tabi.Physics.VelocityY = Tabi.TabiSO.JumpForce;
             }
         }
-        Tabi.HandleHorizontalInput(dashBuffer);
+        TabiCon.HandleHorizontalInput(dashBuffer);
         
     }
 }

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 9083522809625078731}
   - component: {fileID: 7966925633995003652}
   - component: {fileID: 3562494870668606900}
+  - component: {fileID: 7006439564098990757}
   m_Layer: 0
   m_Name: Shot
   m_TagString: Untagged
@@ -138,6 +139,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &7006439564098990757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5510752332619007444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7539e0164825c9c4ab462a85c58fc67a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onEnableTime: 0
+  lifeTime: 2
 --- !u!1 &6627230322997578466
 GameObject:
   m_ObjectHideFlags: 0

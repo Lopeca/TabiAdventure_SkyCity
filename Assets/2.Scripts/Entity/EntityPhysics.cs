@@ -54,7 +54,7 @@ public class EntityPhysics : MonoBehaviour
     public void CheckGround()
     {
         RaycastHit2D hit = Physics2D.BoxCast(bodyCollider.bounds.center,
-            new Vector2(bodyCollider.bounds.size.x, bodyCollider.bounds.size.y),
+            new Vector2(bodyCollider.bounds.size.x, bodyCollider.bounds.size.y - skinWidth),
             0,
             Vector2.down,
             groundCheckDistance,
@@ -66,8 +66,6 @@ public class EntityPhysics : MonoBehaviour
 
     private void MovePosition()
     {
-        if (velocity == Vector2.zero) return;
-
         Vector2 move = Vector2.zero;
 
         // 수평 이동 처리
@@ -150,7 +148,7 @@ public class EntityPhysics : MonoBehaviour
             {
                 float hitAngle = Vector2.Angle(verticalHit.normal, Vector2.up);
 
-                if (hitAngle < maxGroundAngle)
+                if (hitAngle > maxGroundAngle)
                 {
                     // 경사면 - 그대로 이동
                     move.y = velocity.y * Time.fixedDeltaTime;

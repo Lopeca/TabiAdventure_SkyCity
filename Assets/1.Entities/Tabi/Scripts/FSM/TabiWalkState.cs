@@ -22,7 +22,7 @@ public class TabiWalkState : TabiGroundState
     public override void OnUpdate()
     {
         base.OnUpdate();
-        Tabi.HandleHorizontalInput();
+        TabiCon.HandleHorizontalInput();
     }
     
     public override void OnExit()

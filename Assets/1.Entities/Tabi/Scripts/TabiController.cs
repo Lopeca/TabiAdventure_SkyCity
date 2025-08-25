@@ -10,6 +10,8 @@ public class TabiController : StellaController
     [SerializeField, ReadOnly] private Vector2 inputValue;
     public Vector2 InputValue => inputValue;
 
+    public bool canControl;
+
 	[SerializeField, ReadOnly] private bool dashBuffer;
     private bool jumpBuffer;
     public float jumpStartTime;
@@ -22,9 +24,31 @@ public class TabiController : StellaController
     {
         tabi = GetComponent<Tabi>();
     }
+
+    private void Awake()
+    {
+        canControl = true;
+    }
+
+    public void HandleHorizontalInput(bool dash = false)
+    {
+        float speed = dash ? tabi.TabiSO.MoveSpeed * 2 : tabi.TabiSO.MoveSpeed;
+        tabi.Physics.VelocityX = InputValue.x * speed;
+        if(InputValue.x != 0) Look(InputValue.x);
+    }
+
+    private void Look(float inputValueX)
+    {
+        transform.eulerAngles = inputValueX > 0 ? new Vector3(0, 0, 0) : new Vector3(0, 180, 0);
+    }
     
     public override void OnMove(Vector2 value)
     {
+        if (!canControl)
+        {
+            inputValue = Vector2.zero;  
+            return;
+        }
         inputValue = value;
     }
 

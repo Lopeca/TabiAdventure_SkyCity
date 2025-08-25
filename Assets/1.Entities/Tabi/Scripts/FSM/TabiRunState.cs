@@ -21,7 +21,7 @@ public class TabiRunState : TabiGroundState
     public override void OnUpdate()
     {
         base.OnUpdate();
-        Tabi.HandleHorizontalInput(true);
+        TabiCon.HandleHorizontalInput(true);
     }
     
     public override void OnExit()

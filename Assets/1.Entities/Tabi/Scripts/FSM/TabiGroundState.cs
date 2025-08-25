@@ -4,7 +4,7 @@ public abstract class TabiGroundState:FSMState
 {
     protected TabiFSM FSM => owner as TabiFSM;
     protected Tabi Tabi => FSM.Tabi;
-    private readonly TabiController TabiCon;
+    protected readonly TabiController TabiCon;
 
     protected TabiGroundState(FSMBase owner) : base(owner)
     {
