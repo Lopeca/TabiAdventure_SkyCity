@@ -6,9 +6,9 @@ public class TabiIdleState : TabiGroundState
     {
     }
 
-    public override void InitTransitions()
+    public override void InitUniqueTransitions()
     {
-        base.InitTransitions();
+        base.InitUniqueTransitions();
         AddTransition(()=>Tabi.Controller.InputValue.x != 0 && !Tabi.Controller.DashBuffer, FSM.WalkState);
         AddTransition(()=>Tabi.Controller.InputValue.x != 0 && Tabi.Controller.DashBuffer, FSM.WalkState);
     }

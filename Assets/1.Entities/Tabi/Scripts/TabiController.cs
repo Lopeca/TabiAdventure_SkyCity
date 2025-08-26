@@ -34,7 +34,7 @@ public class TabiController : StellaController
     {
         float speed = dash ? tabi.TabiSO.MoveSpeed * 2 : tabi.TabiSO.MoveSpeed;
         tabi.Physics.VelocityX = InputValue.x * speed;
-        if(InputValue.x != 0) Look(InputValue.x);
+        if(canControl && InputValue.x != 0) Look(InputValue.x);
     }
 
     private void Look(float inputValueX)
@@ -44,11 +44,6 @@ public class TabiController : StellaController
     
     public override void OnMove(Vector2 value)
     {
-        if (!canControl)
-        {
-            inputValue = Vector2.zero;  
-            return;
-        }
         inputValue = value;
     }
 

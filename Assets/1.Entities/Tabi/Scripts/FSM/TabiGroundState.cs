@@ -11,9 +11,9 @@ public abstract class TabiGroundState:FSMState
         TabiCon = Tabi.Controller;
     }
 
-    public override void InitTransitions()
+    public override void InitUniqueTransitions()
     {
-        base.InitTransitions();
+        base.InitUniqueTransitions();
         AddTransition(()=>!Tabi.Physics.IsGrounded, FSM.AirState);
     }
 
@@ -32,7 +32,6 @@ public abstract class TabiGroundState:FSMState
         if (TabiCon.JumpBuffer)
         {
             Tabi.Physics.VelocityY = Tabi.TabiSO.JumpForce;
-            TabiCon.jumpStartTime = Time.time;
             TabiCon.jumpAscending = true;
         }
     }

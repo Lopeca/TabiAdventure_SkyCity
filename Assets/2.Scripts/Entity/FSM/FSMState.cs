@@ -14,7 +14,7 @@ public abstract class FSMState
         this.owner = owner;
     }
 
-    public virtual void InitTransitions(){}
+    public virtual void InitUniqueTransitions(){}
     public abstract void OnEnter();
     public abstract void OnExit();
 

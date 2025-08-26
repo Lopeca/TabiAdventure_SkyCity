@@ -12,9 +12,9 @@ public class TabiAirState:FSMState
         TabiCon = Tabi.Controller;
     }
 
-    public override void InitTransitions()
+    public override void InitUniqueTransitions()
     {
-        base.InitTransitions();
+        base.InitUniqueTransitions();
         AddTransition(()=>Tabi.Physics.IsGrounded && TabiCon.InputValue.x == 0 , FSM.IdleState);
         AddTransition(()=>Tabi.Physics.IsGrounded && TabiCon.InputValue.x != 0 && !TabiCon.DashBuffer, FSM.WalkState);
         AddTransition(()=>Tabi.Physics.IsGrounded && TabiCon.InputValue.x != 0 && TabiCon.DashBuffer, FSM.RunState);
@@ -23,6 +23,8 @@ public class TabiAirState:FSMState
     public override void OnEnter()
     {
         Tabi.Animator.SetBool(AnimationStrings.Air, true);
+        if (TabiCon.JumpBuffer) TabiCon.jumpStartTime = Time.time;
+        else TabiCon.jumpAscending = false;
         dashBuffer = TabiCon.DashBuffer;
     }
 

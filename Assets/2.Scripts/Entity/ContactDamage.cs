@@ -9,11 +9,8 @@ public class ContactDamage : MonoBehaviour
     {
         if ((layerToDamage & 1 << other.gameObject.layer) != 0)
         {
-            StatHandler target = other.gameObject.GetComponent<StatHandler>();
-            if (target)
-            {
-                target.TakeDamage(damage);
-            }
+            IHitHandler target = other.gameObject.GetComponent<IHitHandler>();
+            target?.OnHit(damage);
         }
     }
 }
