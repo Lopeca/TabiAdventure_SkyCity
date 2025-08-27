@@ -20,7 +20,7 @@ public class TabiHitState:FSMState
         Tabi.Physics.gravityEnabled = false;
         
         Tabi.Physics.VelocityY = 0;
-        Tabi.Physics.VelocityX = Tabi.LookDirection.x * -1;
+        Tabi.Physics.VelocityX = Tabi.LookDirection.x * -1.7f;
         
         DOVirtual.DelayedCall(stunDuration, () =>
         {

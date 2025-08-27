@@ -10,13 +10,19 @@ public class StatHandler : MonoBehaviour
     public float CurrentHP => _currentHP;
 
     public event Action OnDeath;
+
+    public bool IsAlive { get; private set; }
     public float invincibleDuration;
     public float lastDamagedTime;
+
+    public float MaxHP => _damageableSO.BaseHP;
+    public float CurrentHPPercent => _currentHP / MaxHP;
     
     public void Initialize(IDamageableSO damageableSO)
     {
         _damageableSO = damageableSO;
         _currentHP = damageableSO.BaseHP;
+        IsAlive = true;
     }
 
     public void ChangeHP(float delta)
@@ -26,6 +32,7 @@ public class StatHandler : MonoBehaviour
     
     public void TakeDamage(float damage)
     {
+        float prevHP = _currentHP;
         if (Time.time - lastDamagedTime < invincibleDuration)
         {
             return;
@@ -37,6 +44,7 @@ public class StatHandler : MonoBehaviour
         if (_currentHP <= 0)
         {
             OnDeath?.Invoke();
+            IsAlive = false;
         }
     }
 
