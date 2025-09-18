@@ -11,6 +11,8 @@ public class Tabi : MonoBehaviour
     [field:SerializeField] public TabiFSM FSM { get; private set; }
     [field:SerializeField] public StatHandler StatHandler { get; private set; }
     [field:SerializeField] public Animator Animator { get; private set; }
+    
+    [field:SerializeField] public WaterBuster WaterBuster { get; private set; }
 
     public Vector2 LookDirection => transform.eulerAngles.y == 0 ? Vector2.right : Vector2.left;
     private void Reset()

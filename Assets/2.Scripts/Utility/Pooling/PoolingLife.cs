@@ -15,7 +15,7 @@ public class PoolingLife : MonoBehaviour
     {
         if (Time.time - onEnableTime > lifeTime)
         {
-            gameObject.PoolingRelease();
+            if(gameObject.HasRegisteredPooling()) gameObject.PoolingRelease();
         }
     }
 }

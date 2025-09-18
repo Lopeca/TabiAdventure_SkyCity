@@ -27,6 +27,7 @@ public class TabiRunState : TabiGroundState
     public override void OnExit()
     {
         base.OnExit();
+        Tabi.Physics.VelocityX = 0;
         Tabi.Animator.SetBool(AnimationStrings.Run, false);
     }
 }

@@ -15,6 +15,8 @@ public abstract class TabiGroundState:FSMState
     {
         base.InitUniqueTransitions();
         AddTransition(()=>!Tabi.Physics.IsGrounded, FSM.AirState);
+        AddTransition(()=>Tabi.Controller.InputValue.y < 0, FSM.KneelState);
+        
     }
 
     public override void OnEnter()

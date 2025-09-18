@@ -21,6 +21,18 @@ public class WaterBuster : MonoBehaviour
     
     private float chargeStartTime;
 
+    public bool isStanding;
+    private Vector2 standPos;
+    private Vector2 kneelPos;
+
+    private void Awake()
+    {
+        isStanding = true;
+        standPos = transform.localPosition;
+        kneelPos = transform.localPosition;
+        kneelPos.y = 0.875f;
+    }
+
     private void OnEnable()
     {
         tabiCon.OnAttackKeyDown += ChargeBuster;
@@ -28,6 +40,12 @@ public class WaterBuster : MonoBehaviour
     }
 
     private void Update()
+    {
+        AdjustPos();
+        HandleAttack();
+    }
+
+    private void HandleAttack()
     {
         var additiveGlowModule = additiveGlow.main;
         if (isCharging)
@@ -52,6 +70,18 @@ public class WaterBuster : MonoBehaviour
         {
             glowRoot.transform.localScale = Vector3.Lerp(glowRoot.transform.localScale, Vector3.one * 0.3f, Time.deltaTime * glowLerpT);
             additiveGlowModule.simulationSpeed = 1;
+        }
+    }
+
+    private void AdjustPos()
+    {
+        if (isStanding)
+        {
+            transform.localPosition = Vector2.Lerp(transform.localPosition, standPos, Time.deltaTime * 10);
+        }
+        else
+        {
+            transform.localPosition = Vector2.Lerp(transform.localPosition, kneelPos, Time.deltaTime * 10);
         }
     }
 

@@ -136,9 +136,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f143f232f040dd43b9eba5579a1e168, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rootObject: {fileID: 2237898226061424897}
   terrainLayer:
     serializedVersion: 2
     m_Bits: 64
+  damageableLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  damage: 0
+  penetrable: 0
 --- !u!61 &6423406712881026981
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -20,6 +20,8 @@ public class TabiController : StellaController
     
 	public bool DashBuffer => dashBuffer;
     public bool JumpBuffer => jumpBuffer;
+
+    public bool horizontalControlLock;
     private void Reset()
     {
         tabi = GetComponent<Tabi>();
@@ -30,10 +32,19 @@ public class TabiController : StellaController
         canControl = true;
     }
 
+    private void Update()
+    {
+        // Debug.Log(inputValue);
+    }
+
     public void HandleHorizontalInput(bool dash = false)
     {
-        float speed = dash ? tabi.TabiSO.MoveSpeed * 2 : tabi.TabiSO.MoveSpeed;
-        tabi.Physics.VelocityX = InputValue.x * speed;
+        if (!horizontalControlLock)
+        {
+            float speed = dash ? tabi.TabiSO.MoveSpeed * 2 : tabi.TabiSO.MoveSpeed;
+            tabi.Physics.VelocityX = InputValue.x * speed;
+        }
+
         if(canControl && InputValue.x != 0) Look(InputValue.x);
     }
 
